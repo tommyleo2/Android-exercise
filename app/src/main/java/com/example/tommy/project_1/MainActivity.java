@@ -1,9 +1,12 @@
 package com.example.tommy.project_1;
 
 import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,22 +20,24 @@ public class MainActivity extends AppCompatActivity {
 
     private DB database = new DB();
     private Toast onDisplayToast;
+    private CoordinatorLayout mainContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout);
 
+        mainContainer = (CoordinatorLayout)findViewById(R.id.main_container);
         Button loginButton = (Button)findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = ((EditText)findViewById(R.id.username_input)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password_input)).getText().toString();
-                if (username.isEmpty()) {
+                if (TextUtils.isEmpty(username)) {
                     showToast("用户名不能为空");
                     return;
                 }
-                if (password.isEmpty()) {
+                if (TextUtils.isEmpty(password)) {
                     showToast("密码不能为空");
                     return;
                 }
@@ -87,10 +92,14 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
     final void showToast(String message) {
-        if (onDisplayToast != null) {
-            onDisplayToast.cancel();
-        }
-        onDisplayToast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
-        onDisplayToast.show();
+        showSnackBar(message);
+//        if (onDisplayToast != null) {
+//            onDisplayToast.cancel();
+//        }
+//        onDisplayToast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
+//        onDisplayToast.show();
+    }
+    final void showSnackBar(String message) {
+        Snackbar.make(mainContainer, message, Snackbar.LENGTH_SHORT).show();
     }
 }
