@@ -16,7 +16,7 @@ import com.example.tommy.project_1.db.DB;
 public class MainActivity extends AppCompatActivity {
 
     private DB database = new DB();
-    private Toast ondisplayToast;
+    private Toast onDisplayToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
     final void showToast(String message) {
-        if (ondisplayToast != null) {
-            ondisplayToast.cancel();
+        if (onDisplayToast != null) {
+            onDisplayToast.cancel();
         }
-        ondisplayToast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
-        ondisplayToast.show();
+        onDisplayToast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
+        onDisplayToast.show();
     }
 }
