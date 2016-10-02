@@ -1,6 +1,7 @@
 package com.example.tommy.project_1;
 
 import android.content.DialogInterface;
+import android.support.design.widget.TextInputLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AlertDialog;
@@ -31,16 +32,21 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextInputLayout usernameWrapper = (TextInputLayout)findViewById(R.id.username_input_wrapper);
+                TextInputLayout passwordWrapper = (TextInputLayout)findViewById(R.id.password_input_wrapper);
+                usernameWrapper.setErrorEnabled(false);
+                passwordWrapper.setErrorEnabled(false);
                 String username = ((EditText)findViewById(R.id.username_input)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password_input)).getText().toString();
                 if (TextUtils.isEmpty(username)) {
-                    showToast("用户名不能为空");
-                    return;
+                    usernameWrapper.setErrorEnabled(true);
+                    usernameWrapper.setError("用户名不能为空");
                 }
                 if (TextUtils.isEmpty(password)) {
-                    showToast("密码不能为空");
-                    return;
+                    passwordWrapper.setErrorEnabled(true);
+                    passwordWrapper.setError("密码不能为空");
                 }
+                if (TextUtils.isEmpty(password) || TextUtils.isEmpty(username)) return;
                 try {
                     database.login(username, password);
                     showDialog("登录成功");

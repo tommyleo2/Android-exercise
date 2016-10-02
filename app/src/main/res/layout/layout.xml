@@ -34,6 +34,7 @@
                     android:gravity="end"
                     android:layout_marginTop="20dp"/>
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/username_input_wrapper"
                     android:layout_weight="1">
                     <EditText
                         android:id="@+id/username_input"
@@ -41,6 +42,7 @@
                         android:layout_height="match_parent"
                         android:hint="@string/username_hint"
                         android:textSize="@dimen/selectorText_size"
+                        android:gravity="center"
                         android:singleLine="true"
                         />
                 </android.support.design.widget.TextInputLayout>
@@ -54,6 +56,7 @@
                     android:gravity="end"
                     android:layout_marginTop="20dp"/>
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/password_input_wrapper"
                     android:layout_weight="1">
                     <EditText
                         android:id="@+id/password_input"
@@ -62,6 +65,7 @@
                         android:inputType="textPassword"
                         android:hint="@string/password_hint"
                         android:textSize="@dimen/selectorText_size"
+                        android:gravity="center"
                         android:singleLine="true"
                         android:layout_weight="1"/>
                 </android.support.design.widget.TextInputLayout>
