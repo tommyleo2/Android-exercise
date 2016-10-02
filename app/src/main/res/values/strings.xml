@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">project_1</string>
+    <string name="app_name">project_2</string>
     <string name="title">中山大学课外体育积分电子认证系统</string>
     <string name="username">用户名:</string>
     <string name="username_hint">请输入用户名</string>
