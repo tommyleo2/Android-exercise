@@ -1,6 +1,7 @@
 package com.example.tommy.project_1;
 
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.support.design.widget.TextInputLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.CoordinatorLayout;
@@ -49,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(password) || TextUtils.isEmpty(username)) return;
                 try {
                     database.login(username, password);
-                    showDialog("登录成功");
+                    showSnackBar("登录成功");
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    showDialog("登录失败");
+                    showSnackBar("登录失败");
                 }
             }
         });
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 RadioGroup roleGroup = (RadioGroup)findViewById(R.id.role_buttons);
                 int checkedButtonID = roleGroup.getCheckedRadioButtonId();
                 RadioButton checkedButton = (RadioButton)findViewById(checkedButtonID);
-                showToast(checkedButton.getText() + "身份注册功能尚未开启");
+                showSnackBar(checkedButton.getText() + "身份注册功能尚未开启");
             }
         });
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 String identity = ((RadioButton)findViewById(checkedId)).getText().toString();
-                showToast(identity + "身份被选中");
+                showSnackBar(identity + "身份被选中");
             }
         });
     }
@@ -85,27 +86,34 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        showToast("对话框“确定”按钮被点击");
+                        showSnackBar("对话框“确定”按钮被点击");
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        showToast("对话框“取消”按钮被点击");
+                        showSnackBar("对话框“取消”按钮被点击");
                     }
                 })
                 .create()
                 .show();
     }
     final void showToast(String message) {
-        showSnackBar(message);
-//        if (onDisplayToast != null) {
-//            onDisplayToast.cancel();
-//        }
-//        onDisplayToast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
-//        onDisplayToast.show();
+        if (onDisplayToast != null) {
+            onDisplayToast.cancel();
+        }
+        onDisplayToast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT);
+        onDisplayToast.show();
     }
     final void showSnackBar(String message) {
-        Snackbar.make(mainContainer, message, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mainContainer, message, Snackbar.LENGTH_SHORT)
+                .setAction("按钮", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast("Snackbar的按钮被点击了");
+                    }
+                })
+                .setActionTextColor(getResources().getColor(R.color.colorPrimary))
+                .show();
     }
 }
