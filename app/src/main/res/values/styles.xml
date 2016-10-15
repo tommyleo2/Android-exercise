@@ -1,16 +1,31 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="button" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textSize">@dimen/selectorText_size</item>
-        <item name="android:layout_margin">@dimen/selector_margin</item>
+    <style name="contact_list_photo">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:textSize">@dimen/contact_list_photo_text_size</item>
+        <item name="android:background">@drawable/contact_photo</item>
+        <item name="android:layout_marginLeft">@dimen/contact_list_padding</item>
+        <item name="android:layout_marginRight">@dimen/contact_list_padding</item>
+        <item name="android:textColor">@color/contact_list_photo_text_color</item>
     </style>
 
+    <style name="contact_list_name">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/contact_list_contact_name_size</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_marginLeft">@dimen/contact_list_padding</item>
+    </style>
 </resources>

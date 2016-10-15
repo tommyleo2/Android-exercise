@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="prompt_size">18dp</dimen>
-    <dimen name="selectorText_size">18sp</dimen>
-    <dimen name="selector_margin">5dp</dimen>
-    <dimen name="inputTable_margin">20dp</dimen>
+    <!--Contact list photo style-->
+    <dimen name="contact_list_padding">15dp</dimen>
+    <dimen name="contact_list_photo_size">60dp</dimen>
+    <dimen name="contact_list_photo_radius">30dp</dimen>
+    <dimen name="contact_list_photo_text_size">30sp</dimen>
+
+    <dimen name="contact_list_contact_name_size">25sp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
