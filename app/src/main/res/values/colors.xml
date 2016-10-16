@@ -7,4 +7,5 @@
     <color name="contact_list_photo_text_color">#FFFFFF</color>
     <color name="separator">#1E000000</color>
     <color name="black">#D5000000</color>
+    <color name="grey">#8A000000</color>
 </resources>

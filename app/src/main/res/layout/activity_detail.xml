@@ -9,8 +9,7 @@
     <RelativeLayout
         android:id="@+id/detail_upper"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-
+        android:layout_height="250dp"
         android:background="@color/colorPrimary">
         <ImageView
             android:id="@+id/detail_back"
@@ -73,6 +72,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
+                        android:textColor="@color/grey"
                         android:text="手机 山东青岛移动"/>
                 </LinearLayout>
                 <View

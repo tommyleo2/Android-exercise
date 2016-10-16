@@ -14,11 +14,11 @@ import com.example.tommy.project_1.db.DB;
  * Created by tommy on 10/15/16.
  */
 
-class MainPageAdaptor extends BaseAdapter {
+class MainPageAdapter extends BaseAdapter {
     private DB db;
     private Context context;
 
-    MainPageAdaptor(Context context) {
+    MainPageAdapter(Context context) {
         super();
         this.context =context;
         this.db = DB.getInstance(context);
@@ -33,7 +33,7 @@ class MainPageAdaptor extends BaseAdapter {
     }
     @Override
     public long getItemId(int i) {
-        return i + 1;
+        return i;
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {

@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-
-import com.example.tommy.project_1.db.Contact;
 import com.example.tommy.project_1.db.DB;
 
 import java.io.FileNotFoundException;
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         final ListView contactList = (ListView)findViewById(R.id.contact_list);
 
         //  load database data
-        MainPageAdaptor ad = new MainPageAdaptor(MainActivity.this);
+        MainPageAdapter ad = new MainPageAdapter(MainActivity.this);
         contactList.setAdapter(ad);
 
         //  set short click listener
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Click ", Long.toString(id));
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                 intent.putExtra("selected_contact",
-                        ((Contact)contactList.getItemAtPosition((int)id)).getStringArray());
+                        (DB.getInstance(MainActivity.this).queryContact((int)id)).getStringArray());
                 startActivity(intent);
             }
         });
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
                 alertDialog.setTitle("删除联系人")
                         .setMessage("确定删除联系人" +
-                                ((Contact)contactList.getItemAtPosition((int)id)).getName() + "?")
+                                (DB.getInstance(MainActivity.this).queryContact((int)id)).getName() + "?")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {}

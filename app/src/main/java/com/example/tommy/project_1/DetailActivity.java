@@ -30,9 +30,11 @@ public class DetailActivity extends AppCompatActivity {
         ((ListView)findViewById(R.id.detail_lower)).setAdapter(arrayAdapter);
 
         //  get contact info
-        Contact contact = Contact.gernarateContactFromStringArray(
-                getIntent().getExtras().getStringArray("selected_contact"));
-        loadContactData(contact);
+        if (getIntent().getExtras() != null) {
+            Contact contact = Contact.gernarateContactFromStringArray(
+                    getIntent().getExtras().getStringArray("selected_contact"));
+            loadContactData(contact);
+        }
 
         //  set back button
         findViewById(R.id.detail_back).setOnClickListener(new View.OnClickListener() {
