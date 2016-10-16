@@ -1,7 +1,6 @@
 package com.example.tommy.project_1;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +17,15 @@ import com.example.tommy.project_1.db.DB;
 class MainPageAdaptor extends BaseAdapter {
     private DB db;
     private Context context;
-    private int size;
 
     MainPageAdaptor(Context context) {
         super();
         this.context =context;
-        this.db = new DB(context);
-        size = db.getListSize();
+        this.db = DB.getInstance(context);
     }
     @Override
     public int getCount() {
-        return size;
+        return db.getListSize();
     }
     @Override
     public Object getItem(int i) {
@@ -51,7 +48,6 @@ class MainPageAdaptor extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        System.out.println("Count: " + Integer.toString(i));
         Contact ct = (Contact)getItem(i);
         viewHolder.photo.setText(Character.toString(ct.getName().charAt(0)));
         viewHolder.name.setText(ct.getName());

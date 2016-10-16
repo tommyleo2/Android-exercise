@@ -1,7 +1,5 @@
 package com.example.tommy.project_1.db;
 
-import android.graphics.Color;
-
 /**
  * Created by tommy on 10/14/16.
  */
@@ -49,5 +47,12 @@ public class Contact {
     }
     public void setBackgroundColor(String backgroundColor) {
         this.backgroundColor = backgroundColor;
+    }
+
+    public String[] getStringArray() {
+        return new String[] {name, tel, telType, address, backgroundColor};
+    }
+    public static Contact gernarateContactFromStringArray(String[] array) {
+        return new Contact(array[0], array[1], array[2], array[3], array[4]);
     }
 }
