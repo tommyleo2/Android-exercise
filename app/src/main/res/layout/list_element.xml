@@ -2,12 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/contact_list_padding"
-    android:paddingBottom="@dimen/contact_list_padding">
+    android:paddingTop="@dimen/fruit_list_padding"
+    android:paddingBottom="@dimen/fruit_list_padding">
+    <ImageView
+        android:id="@+id/fruit_pic"
+        style="@style/fruit_list_pic"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/apple"/>
     <TextView
-        android:id="@+id/contact_photo"
-        style="@style/contact_list_photo"/>
-    <TextView
-        android:id="@+id/contact_name"
-        style="@style/contact_list_name"/>
+        android:id="@+id/fruit_name"
+        style="@style/fruit_list_name"
+        android:text="Apple"/>
 </LinearLayout>

@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">project_3</string>
-    <string name="go_back">Go Back</string>
-    <string name="favorite">Favorite</string>
-    <string name="sms">SMS</string>
+    <string name="app_name">project_4</string>
+    <string name="static_broadcast">com.example.tommy.project_1.StaticReceiver</string>
+    <string name="dynamic_broadcast">com.example.tommy.project_1.DynamicReceiver</string>
 </resources>

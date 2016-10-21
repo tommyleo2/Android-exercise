@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Contact list photo style-->
-    <dimen name="contact_list_padding">15dp</dimen>
-    <dimen name="contact_list_photo_size">60dp</dimen>
-    <dimen name="contact_list_photo_radius">30dp</dimen>
-    <dimen name="contact_list_photo_text_size">30sp</dimen>
+    <!--Fruit list photo style-->
+    <dimen name="fruit_list_padding">10dp</dimen>
+    <dimen name="fruit_list_photo_size">100dp</dimen>
 
-    <dimen name="contact_list_contact_name_size">25sp</dimen>
+    <dimen name="fruit_list_fruit_name_size">30sp</dimen>
 
     <!--Detail item padding-->
     <dimen name="detail_item_padding">20dp</dimen>
-    <dimen name="detail_item_text_size">18sp</dimen>
+    <dimen name="detail_item_text_size">25sp</dimen>
 
     <!--Detail button padding-->
     <dimen name="detail_button_padding">15dp</dimen>

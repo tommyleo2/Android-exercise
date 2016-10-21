@@ -8,6 +8,7 @@ For more information: [SYSUAndroid2016](https://github.com/WideLee/SYSUAndroid20
 1. UI Design
 2. Event Handle
 3. Intent, Bundle, Listview
+4. Broadcast
 
 ...
 
@@ -27,3 +28,10 @@ Project_3遇到的问题:
     1. 改用`CursorAdapter`, 需要实现`newView()`和`bindView()`方法, 并在删除后`swapCursor()`, 关闭原Cursor
     2. 缓存Cursor(其实就是造个CursorAdapter的轮子), 好处是可以让`CursorAdapter`隐藏, 只在删除后调用其方法`notifyDataSetChanged()`, 其余操作均调用DB类的方法即可, 类似数据绑定
 5.在实现activity_detail时, 无法将上面的View高度设为1/3, 最后只能手动设置高度
+
+---
+
+Project_4遇到的问题:
+
+1. 产生通知时,`setLargeIcon()`需要用`BitmapFactory`产生bitmap
+2. Manifest里面需要将页面设置成`SingleInstance`, 否则跳转时会出现多个实例, 多次返回才能退回
