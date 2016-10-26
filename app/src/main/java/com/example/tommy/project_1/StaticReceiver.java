@@ -26,7 +26,7 @@ public class StaticReceiver extends BroadcastReceiver {
             Bundle bundle = intent.getExtras();
             notificationBuilder.setContentTitle("静态广播")
                     .setContentText(bundle.getString("name"))
-                    .setSmallIcon(bundle.getInt("picId"))
+                    .setSmallIcon(R.mipmap.dynamic)
                     .setTicker(bundle.getString("name"))
                     .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), bundle.getInt("picId")))
                     .setContentIntent(onClickedNotificationPendingIntent)
