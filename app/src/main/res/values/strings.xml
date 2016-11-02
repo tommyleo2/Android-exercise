@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">project_4</string>
+    <string name="app_name">project_5</string>
     <string name="static_broadcast">com.example.tommy.project_1.StaticReceiver</string>
     <string name="dynamic_broadcast">com.example.tommy.project_1.DynamicReceiver</string>
+    <string name="widget_text">Widget</string>
+    <string name="add_widget">Add widget</string>
 </resources>

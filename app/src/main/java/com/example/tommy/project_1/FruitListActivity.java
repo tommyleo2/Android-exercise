@@ -1,5 +1,6 @@
 package com.example.tommy.project_1;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import layout.FruitWidget;
 
 /**
  * Created by tommy on 10/21/16.

@@ -36,7 +36,7 @@ public class DynamicActivity extends AppCompatActivity {
                     ((Button)v).setText("Register Broadcast");
                     Log.i("Dynamic broadcast", "unregister");
                 }
-                registered = ! registered;
+                registered = !registered;
             }
         });
 

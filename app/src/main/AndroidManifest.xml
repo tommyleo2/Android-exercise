@@ -17,12 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FruitListActivity"
-            android:launchMode="singleInstance">
-        </activity>
-        <activity android:name=".DynamicActivity"
-            android:launchMode="singleInstance">
-        </activity>
+        <activity
+            android:name=".FruitListActivity"
+            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".DynamicActivity"
+            android:launchMode="singleInstance"/>
 
         <receiver
             android:name=".StaticReceiver"
@@ -35,7 +35,17 @@
         <receiver
             android:name=".DynamicReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+        <receiver android:name="layout.FruitWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.tommy.project_1.StaticReceiver" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/fruit_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
