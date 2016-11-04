@@ -9,6 +9,7 @@ For more information: [SYSUAndroid2016](https://github.com/WideLee/SYSUAndroid20
 2. Event Handle
 3. Intent, Bundle, Listview
 4. Broadcast
+5. Widget
 
 ...
 
