@@ -10,6 +10,7 @@ For more information: [SYSUAndroid2016](https://github.com/WideLee/SYSUAndroid20
 3. Intent, Bundle, Listview
 4. Broadcast
 5. Widget
+6. Multithreading, service
 
 ...
 
