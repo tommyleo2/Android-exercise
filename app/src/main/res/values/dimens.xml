@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--Fruit list photo style-->
-    <dimen name="fruit_list_padding">10dp</dimen>
-    <dimen name="fruit_list_photo_size">100dp</dimen>
-
-    <dimen name="fruit_list_fruit_name_size">30sp</dimen>
-
-    <!--Detail item padding-->
-    <dimen name="detail_item_padding">20dp</dimen>
-    <dimen name="detail_item_text_size">25sp</dimen>
-
-    <!--Detail button padding-->
-    <dimen name="detail_button_padding">15dp</dimen>
-
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-
     <!--
 Refer to App Widget Documentation for margin information
 http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout

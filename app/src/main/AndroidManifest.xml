@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tommy.project_1">
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,35 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".FruitListActivity"
-            android:launchMode="singleInstance"/>
-        <activity
-            android:name=".DynamicActivity"
-            android:launchMode="singleInstance"/>
 
-        <receiver
-            android:name=".StaticReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.example.tommy.project_1.StaticReceiver" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".DynamicReceiver"
-            android:enabled="true"
-            android:exported="true" />
-        <receiver android:name="layout.FruitWidget">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.tommy.project_1.StaticReceiver" />
-            </intent-filter>
+        <service android:name=".MusicService" android:exported="true"/>
 
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/fruit_widget_info" />
-        </receiver>
     </application>
 
 </manifest>
