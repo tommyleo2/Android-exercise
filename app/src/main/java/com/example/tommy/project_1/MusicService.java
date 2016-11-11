@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 
 public class MusicService extends Service {
-    private String[] songs = {"K.Will-Melt.mp3", "5.mp3"};
+    private String[] songs = {"built_in.mp3", "5.mp3"};
     String srcPath;
     public final MusicServiceBinder musicServiceBinder = new MusicServiceBinder();
     private MediaPlayer mediaPlayer;
@@ -25,6 +25,7 @@ public class MusicService extends Service {
             return MusicService.this;
         }
     }
+
     @Override
     public IBinder onBind(Intent intent) {
         if (mediaPlayer == null) {
@@ -98,11 +99,7 @@ public class MusicService extends Service {
     public void stop() {
         Log.v("Media", "stop music");
         mediaPlayer.stop();
-        try {
-            mediaPlayer.prepare();
-            mediaPlayer.seekTo(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mediaPlayer.reset();
+        isMediaLoaded = false;
     }
 }

@@ -7,18 +7,26 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,7 +45,7 @@ public class StartupActivity extends AppCompatActivity {
     //permission method.
     public static void verifyStoragePermissions(Activity activity) {
         // Check if we have read or write permission
-        int readPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int readPermission = ActivityCompat.checkSelfPermission(activity, PERMISSIONS_STORAGE[0]);
 
         if (readPermission != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user
@@ -53,7 +61,7 @@ public class StartupActivity extends AppCompatActivity {
     private ServiceConnection sc = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            musicService = ((MusicService.MusicServiceBinder)service).getService();
+            musicService = ((MusicService.MusicServiceBinder) service).getService();
         }
 
         @Override
@@ -66,6 +74,7 @@ public class StartupActivity extends AppCompatActivity {
         private final int PROGRESS = 1;
         private final int ROTATE = 2;
         Thread progressThread, rotationThread;
+
         UIHandler() {
             progressThread = new Thread() {
                 @Override
@@ -90,6 +99,7 @@ public class StartupActivity extends AppCompatActivity {
             };
             rotationThread = new Thread() {
                 private float rotation = 0;
+
                 @Override
                 public void run() {
                     while (true) {
@@ -109,7 +119,8 @@ public class StartupActivity extends AppCompatActivity {
                 }
             };
         }
-        public void start() {
+
+        void start() {
             progressThread.start();
             rotationThread.start();
         }
@@ -119,12 +130,12 @@ public class StartupActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case PROGRESS:
-                    textViewPlayedTime.setText((String)msg.obj);
+                    textViewPlayedTime.setText((String) msg.obj);
                     progressBar.setProgress(msg.arg1);
                     Log.v("Handler", "Progress: " + msg.obj);
                     break;
                 case ROTATE:
-                    cover.setRotation((float)msg.obj);
+                    cover.setRotation((float) msg.obj);
                     //Log.v("Handler", "Rotation: " + Float.toString((float)msg.obj));
                     break;
             }
@@ -148,31 +159,35 @@ public class StartupActivity extends AppCompatActivity {
 
         verifyStoragePermissions(StartupActivity.this);
 
-        cover = (ImageView)findViewById(R.id.album_cover);
-        buttonPlay = (Button)findViewById(R.id.button_play);
-        buttonStop = (Button)findViewById(R.id.button_stop);
-        buttonQuit = (Button)findViewById(R.id.button_quit);
-        textViewStatus = (TextView)findViewById(R.id.status);
-        textViewPlayedTime = (TextView)findViewById(R.id.current_played_time);
-        textViewDuration = (TextView)findViewById(R.id.music_length);
-        progressBar = (SeekBar)findViewById(R.id.progress_bar);
-        textViewMediaPath = (TextView)findViewById(R.id.media_path);
+        cover = (ImageView) findViewById(R.id.album_cover);
+        buttonPlay = (Button) findViewById(R.id.button_play);
+        buttonStop = (Button) findViewById(R.id.button_stop);
+        buttonQuit = (Button) findViewById(R.id.button_quit);
+        textViewStatus = (TextView) findViewById(R.id.status);
+        textViewPlayedTime = (TextView) findViewById(R.id.current_played_time);
+        textViewDuration = (TextView) findViewById(R.id.music_length);
+        progressBar = (SeekBar) findViewById(R.id.progress_bar);
+        textViewMediaPath = (TextView) findViewById(R.id.media_path);
 
         progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
-                    musicService.setProgress(progress);
+                    String s_progress = dateFormat.format(progress);
+                    textViewPlayedTime.setText(s_progress);
+                    //Log.v("Progress bar", "Progress: " + s_progress);
                 }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                musicService.pause();
+                isPlaying = false;
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                musicService.setProgress(seekBar.getProgress());
                 if (!isPlaying) {
                     playMusic();
                 }
@@ -187,6 +202,7 @@ public class StartupActivity extends AppCompatActivity {
                 } else {
                     playMusic();
                 }
+
             }
         });
 
@@ -201,6 +217,8 @@ public class StartupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 unbindService(sc);
+                Intent intent = new Intent(StartupActivity.this, MusicService.class);
+                StartupActivity.this.stopService(intent);
                 try {
                     StartupActivity.this.finish();
                     System.exit(0);
@@ -211,31 +229,77 @@ public class StartupActivity extends AppCompatActivity {
         });
 
         Intent intent = new Intent(this, MusicService.class);
+        startService(intent);
         bindService(intent, sc, BIND_AUTO_CREATE);
 
         mHandler.start();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     public void playMusic() {
         musicService.play();
+        progressBar.setMax(musicService.getDuration());
         buttonPlay.setText("PAUSE");
         textViewStatus.setText("Playing");
         isPlaying = true;
         textViewDuration.setText(dateFormat.format(musicService.getDuration()));
-        progressBar.setMax(musicService.getDuration());
-        textViewMediaPath.setText(musicService.getMediaPath());
+        textViewMediaPath.setText("Media: " + musicService.getMediaPath());
 
     }
+
     public void pauseMusic() {
         musicService.pause();
         buttonPlay.setText("PLAY");
         textViewStatus.setText("Paused");
         isPlaying = false;
     }
+
     public void stopMusic() {
         musicService.stop();
         buttonPlay.setText("PLAY");
         textViewStatus.setText("Stopped");
         isPlaying = false;
+        progressBar.setProgress(0);
+        textViewPlayedTime.setText("00:00");
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        String srcPath = Environment.getExternalStorageDirectory().getPath() + "/Music/built_in.mp3";
+        try {
+            OutputStream out = new FileOutputStream(srcPath);
+            InputStream in = getResources().openRawResource(R.raw.built_in);
+            byte[] buffer = new byte[1024];
+            int read;
+            try {
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                }
+                in.close();
+                out.flush();
+            } catch (Exception e) {
+                Log.e("Write music file: ", e.getMessage());
+            }
+        } catch (Exception e) {
+            Log.e("Open music file: ", e.getMessage());
+        }
     }
 }
