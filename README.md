@@ -11,6 +11,7 @@ For more information: [SYSUAndroid2016](https://github.com/WideLee/SYSUAndroid20
 4. Broadcast
 5. Widget
 6. Multithreading, service
+7. I/O with SharedPreferences and file
 
 ...
 
