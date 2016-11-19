@@ -55,10 +55,10 @@ Project_6遇到的问题:
 Project_8遇到的问题:
 
 1. 通讯录存储实际上也是用数据库，在调用`getContentResolver().query()`方法时本质上是生成了SQL语句。这句SQL的结构是：`select projection from table where ( selection ) order by order`其中，与其参数对应关系为：
-　　* url - table；
-　　* projection - projection；
-　　* selection - selection；
-　　* selectionArgs - 占位符参数；
+  * url - table；
+  * projection - projection；
+  * selection - selection；
+  * selectionArgs - 占位符参数；
   * sortOrder - order；
-　 * 注意，where语句中的两个括号是系统加的（可用SQL注入加入`group by`）。
+  * 注意，where语句中的两个括号是系统加的（可用SQL注入加入`group by`）。
 
