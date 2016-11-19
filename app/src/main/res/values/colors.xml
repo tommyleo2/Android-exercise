@@ -3,9 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="fruit_list_name_text_color">#000000</color>
-    <color name="fruit_list_photo_text_color">#FFFFFF</color>
-    <color name="separator">#1E000000</color>
-    <color name="black">#D5000000</color>
-    <color name="grey">#8A000000</color>
+    <color name="Grey">#C0C0C0</color>
+    <color name="Blue">#3399FF</color>
+    <color name="Green">#009900</color>
 </resources>
