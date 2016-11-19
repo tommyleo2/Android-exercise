@@ -23,19 +23,22 @@ class DB {
 
     private DatabaseHandler databaseHandler;
     private Context context;
+    private SQLiteDatabase writableDB, readableDB;
 
     DB(Context context) {
         this.context = context;
         databaseHandler = new DatabaseHandler(context);
+        writableDB = databaseHandler.getWritableDatabase();
+        readableDB = databaseHandler.getReadableDatabase();
     }
 
     Cursor getAll() {
-        return databaseHandler.getReadableDatabase().rawQuery("select * from " + TABLE_BIRTHDAY,
+        return readableDB.rawQuery("select * from " + TABLE_BIRTHDAY,
                 new String[] {});
     }
 
     void deleteItemById(long id) {
-        databaseHandler.getWritableDatabase().execSQL(
+        writableDB.execSQL(
                 "delete from " + TABLE_BIRTHDAY +
                         " where " + KEY_ID + " = " + Long.toString(id),
                 new String[] {});
@@ -44,7 +47,7 @@ class DB {
     void updateItemById(long id, int year, int month, int day, String present) {
         String birthday = getDate(year, month, day);
         Log.d("updateById: ", Long.toString(id) + " " + birthday + " " + present);
-        databaseHandler.getWritableDatabase().execSQL(
+        writableDB.execSQL(
                 "update " + TABLE_BIRTHDAY + " set " +
                         KEY_BIRTHDAY + " = ?, " +
                         KEY_PRESENT + " = ? " +
@@ -55,11 +58,22 @@ class DB {
     void addItem(String name, int year, int month, int day, String present) {
         String birthday = getDate(year, month, day);
         Log.d("addItem: ", name + " " + birthday + " " + present);
-        databaseHandler.getWritableDatabase().execSQL(
+        writableDB.execSQL(
                 "insert into " + TABLE_BIRTHDAY + " ( " +
                         KEY_NAME + ", " + KEY_BIRTHDAY + ", " + KEY_PRESENT + " ) " +
                         "values (?, ?, ?)",
                 new String[] {name, birthday, present});
+    }
+
+    boolean hasName(String name) {
+        Cursor cursor = readableDB.rawQuery(
+                "select _id from " + TABLE_BIRTHDAY +
+                        " where " + KEY_NAME + " like ?",
+                new String[] {name}
+        );
+        boolean result = cursor.getCount() > 0;
+        cursor.close();
+        return result;
     }
 
     private String getDate(int year, int month, int day) {

@@ -1,9 +1,15 @@
 package com.example.tommy.project_1;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,18 +18,43 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    // Storage Permissions variables
+    private static final int REQUEST_READ_CONTACTS = 1;
+    private static String[] PERMISSIONS_CONTACTS = {
+            Manifest.permission.READ_CONTACTS
+    };
 
-    DB db = new DB(MainActivity.this);
+    //permission method.
+    public static void verifyContactsPermissions(Activity activity) {
+        // Check if we have read
+        int readPermission = ActivityCompat.checkSelfPermission(activity, PERMISSIONS_CONTACTS[0]);
+
+        if (readPermission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_CONTACTS,
+                    REQUEST_READ_CONTACTS
+            );
+        }
+    }
+
+    DB db;
     SimpleCursorAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        verifyContactsPermissions(MainActivity.this);
+
+        db = new DB(MainActivity.this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -70,18 +101,38 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-                ((TextView)dialogView.findViewById(R.id.name)).setText(
-                        ((TextView)view.findViewById(R.id.name)).getText().toString());
+                String name = ((TextView)view.findViewById(R.id.name)).getText().toString();
+                ((TextView)dialogView.findViewById(R.id.name)).setText(name);
+
                 String temp = ((TextView)view.findViewById(R.id.birthday))
                         .getText().toString();
                 String[] date = temp.split("-");
-                Log.i("Date", temp);
                 ((DatePicker)dialogView.findViewById(R.id.birthday)).updateDate(
                         Integer.parseInt(date[0]),
                         Integer.parseInt(date[1]),
                         Integer.parseInt(date[2]));
+
                 ((TextView)dialogView.findViewById(R.id.present)).setText(
                         ((TextView)view.findViewById(R.id.present)).getText().toString());
+
+
+                TextView phoneView = (TextView)dialogView.findViewById(R.id.phone);
+
+                try (Cursor cursor = getContentResolver().query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " = ?",
+                        new String[]{name},
+                        null)) {
+                    cursor.moveToNext();
+                    Log.i("Contacts", Integer.toString(cursor.getCount()));
+                    String phone = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    Log.i("Phone", phone);
+                    phoneView.setText(phone);
+                    cursor.close();
+                } catch (Exception e) {
+                    phoneView.setText("无");
+                }
 
                 alertDialog
                         .setView(dialogView)
