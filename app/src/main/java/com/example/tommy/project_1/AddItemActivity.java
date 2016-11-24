@@ -34,7 +34,7 @@ public class AddItemActivity extends AppCompatActivity {
                 String present = ((TextView)findViewById(R.id.present)).getText().toString();
                 db.addItem(name,
                         datePicker.getYear(),
-                        datePicker.getMonth(),
+                        datePicker.getMonth() + 1,
                         datePicker.getDayOfMonth(),
                         present);
                 finish();

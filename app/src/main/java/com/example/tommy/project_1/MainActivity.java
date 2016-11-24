@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                                 DatePicker datePicker = ((DatePicker)dialogView.findViewById(R.id.birthday));
                                 db.updateItemById(id,
                                         datePicker.getYear(),
-                                        datePicker.getMonth(),
+                                        datePicker.getMonth() + 1,
                                         datePicker.getDayOfMonth(),
                                         ((TextView)dialogView.findViewById(R.id.present)).getText().toString());
                                 adapter.changeCursor(db.getAll());
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 String[] date = temp.split("-");
                 ((DatePicker)dialogView.findViewById(R.id.birthday)).updateDate(
                         Integer.parseInt(date[0]),
-                        Integer.parseInt(date[1]),
+                        Integer.parseInt(date[1]) - 1,
                         Integer.parseInt(date[2]));
 
                 ((TextView)dialogView.findViewById(R.id.present)).setText(
